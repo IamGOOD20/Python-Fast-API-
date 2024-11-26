@@ -1,4 +1,4 @@
-FROM python:3.12.0
+docker run FROM python:3.12.0
 
 # Set working directory to /usr/src/app 
 WORKDIR /usr/src/app 
