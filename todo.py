@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Path
 from model import ToDo
 
 todo_router = APIRouter()
@@ -14,3 +14,13 @@ async def add_todo(todo: ToDo) -> dict:
 async def retrieve_todo() -> dict:
     return {'todo_list': todo_list}
 
+@todo_router.get("/todo/{todo_id}")
+async def get_single_todo(todo_id: int = Path(..., title="The ID of the todo to retrieve.")) -> dict:
+    for todo in todo_list:
+        if todo.id == todo_id:
+            return {
+                "todo": todo
+            }
+        return {
+            "message": "Todo with supplied ID doesn't exist."
+        }
