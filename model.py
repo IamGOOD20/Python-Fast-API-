@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from typing import List
 
 class ToDo(BaseModel):
     id: int
@@ -15,8 +16,25 @@ class ToDoItem(BaseModel):
     item: str
 
     class Config:
-        schema_extra = {"example": {
-            "item": "Read the next chapter of the book"
+        schema_extra = {
+            "example": {
+                "item": "Read the next chapter of the book"
             }
         }
 
+class ToDoItems(BaseModel):
+    todos: List[ToDoItem]
+
+    class Config:
+        schema_extra = {
+            'example': {
+                "todos": [
+                    {
+                        "item": "Example schema 1!"
+                    },
+                    {
+                        "item": "Example schema 2!"
+                    }
+                ]
+            }
+        }
