@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Path, HTTPException, status, Request, Depends
-from model import ToDo, ToDoItem, ToDoItems
+from Todo.model import ToDo, ToDoItem, ToDoItems
 from fastapi.templating import Jinja2Templates
 
 todo_router = APIRouter()
@@ -8,7 +8,7 @@ todo_list = []
 
 templates = Jinja2Templates(directory='templates/')
 
-@todo_router.post('/todo')
+@todo_router.post('')
 async def add_todo(request: Request, todo: ToDo = Depends(ToDo.as_form)):
     todo.id = len(todo_list) + 1
     todo_list.append(todo)
@@ -18,7 +18,7 @@ async def add_todo(request: Request, todo: ToDo = Depends(ToDo.as_form)):
                                           'todos': todo_list
                                       })
 
-@todo_router.get('/todo', response_model=ToDoItems)
+@todo_router.get('', response_model=ToDoItems)
 async def retrieve_todo(request: Request):
     return templates.TemplateResponse('home.html',
                                       {
@@ -66,7 +66,7 @@ async def delete_single_todo(todo_id: int) -> dict:
         detail=r'Todo with supplied ID doesn\'t exist'
     )
 
-@todo_router.delete('/todo')
+@todo_router.delete('')
 async def delete_all_todo() -> dict:
     todo_list.clear()
     return {'message': 'TOdo list successfully deleted'}
